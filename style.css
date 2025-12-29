@@ -9,10 +9,6 @@ body {
   padding: 20px;
   min-height: 100vh;
 }
-.container {
-  max-width: 900px;
-  margin: 0 auto;
-}
 .prank {
   position: fixed;
   top: 0;
@@ -54,7 +50,10 @@ body {
     transform: rotate(360deg);
   }
 }
-
+container {
+  max-width: 900px;
+  margin: 0 auto;
+}
 .header {
   text-align: center;
   background-color: #faf1f1;
