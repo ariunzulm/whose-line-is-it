@@ -1,56 +1,87 @@
+const overlay = document.getElementById("prankOverlay");
 const quote$ = document.querySelector(".quote p");
 const score$ = document.querySelectorAll(".status-value");
+const baatarvan$ = document.querySelector(".baatarvan");
+const narantsogt$ = document.querySelector(".narantsogtc");
+const others$ = document.querySelector(".others");
+const modalContent$ = document.querySelector(".modal-content");
 const winModal$ = document.getElementById("winModal");
 const finalScore$ = document.getElementById("finalScore");
 
+const endPrank = () => {
+  overlay.innerHTML = "<h2>LOGIC FOUND! YOU KNOW WHAT I MEAN?</h2>";
+
+  setTimeout(() => {
+    overlay.style.display = "none";
+    randomQuotes();
+  }, 1500);
+};
+
 let baatarvanScore = 0;
 let narantsogtScore = 0;
+let othersScore = 0;
 let currentQuote = {};
+let quoteIndex = 0;
 
-function quoteRandomer() {
-  const randomQuote = Math.floor(Math.random() * quotes.length);
-  currentQuote = quotes[randomQuote];
-  quote$.textContent = currentQuote.quote;
-}
-
-function checkAnswer(select) {
-  if (select === currentQuote.whose) {
-    if (select === "baatarvan") {
-      baatarvanScore++;
-    }
-    if (select === "narantsogt") {
-      narantsogtScore++;
-    }
-
-    updateScore();
-    alert("That's correct Bro! 🎉");
-    if (baatarvanScore >= 16 || narantsogtScore >= 16) {
-      showWinModal();
-    } else {
-      quoteRandomer();
-    }
-  } else {
-    alert("Oops! Wrong one. Let's try again!");
+const renderQuotes = () => {
+  if (quoteIndex >= quotes.length) {
+    showWinModal();
+    return;
   }
-}
+  currentQuote = quotes[quoteIndex];
+  quote$.textContent = currentQuote.quote;
+  quoteIndex++;
+};
 
-function updateScore() {
-  score$[0].textContent = `${baatarvanScore}/16`;
-  score$[1].textContent = `${narantsogtScore}/16`;
-}
+const checkSelection = (select) => {
+  const isCorrect = select === currentQuote.whose;
+  const selectedOption = document.querySelector(`.${select}`);
+  const selected = select === "baatarvan" ? baatarvan$ : narantsogt$;
 
-function startGame() {
+  if (isCorrect) {
+    if (select === "baatarvan") baatarvanScore++;
+    if (select === "narantsogt") narantsogtScore++;
+    if (select === "others") othersScore++;
+    selectedOption.classList.add("correct");
+    updateScore();
+
+    setTimeout(() => {
+      selectedOption.classList.remove("correct");
+      quoteIndex++;
+      renderQuotes();
+    }, 1000);
+  } else {
+    selectedOption.classList.add("wrong");
+    setTimeout(() => {
+      selectedOption.classList.remove("wrong");
+    }, 1000);
+  }
+};
+
+const updateScore = () => {
+  if (score$[0] && score$[1]) {
+    score$[0].textContent = `${baatarvanScore}/16`;
+    score$[1].textContent = `${narantsogtScore}/16`;
+  }
+};
+
+const resetGame = () => {
   baatarvanScore = 0;
   narantsogtScore = 0;
+  othersScore = 0;
+  quoteIndex = 0;
 
-  updateScore();
   winModal$.style.display = "none";
-  quoteRandomer();
-}
-function showWinModal() {
+  updateScore();
+  renderQuotes();
+};
+
+const showWinModal = () => {
   winModal$.style.display = "flex";
-  finalScore$.textContent = `Final Scores - Baatarvan: ${baatarvanScore}, Narantsogt: ${narantsogtScore}`;
-}
+  finalScore$.textContent = ` Baatarvan: ${baatarvanScore}, Narantsogt: ${narantsogtScore}, Avengers at 9am:${othersScore},`;
+};
+
+
 
 const quotes = [
   { quote: "За яагаад хоцрооод байнааа!", whose: "baatarvan" },

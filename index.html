@@ -12,8 +12,25 @@
   </head>
   <body>
     <div class="container">
+      <div class="prank" id="prankOverlay">
+        <div class="prank-content">
+          <h1>404</h1>
+          <h2>ERROR: CHRISTMAS_LOGIC_NOT_FOUND</h2>
+          <br />
+          <p>Proceeding with 3G speeds...</p>
+          <br />
+          <p>
+            Class 3G server is currently ..... connection too slow. The Syntax
+            Error.... ReferenceError.....The Infinite Loop......NaN...
+          </p>
+          <div class="loader"></div>
+          <button class="button" onclick="endPrank()">
+            Try to find signal
+          </button>
+        </div>
+      </div>
       <div class="header">
-        <h1>The Ultimate Guess-Off: <br />Baatarvan vs Narantsogt:</h1>
+        <h1>The Ultimate Guess-Off:</h1>
 
         <div class="statuses">
           <div class="status">
@@ -22,6 +39,10 @@
           </div>
           <div class="status">
             <div class="status-label">Narantsogt</div>
+            <div class="status-value" id="score">0/16</div>
+          </div>
+          <div class="status">
+            <div class="status-label">Avengers of 9am</div>
             <div class="status-value" id="score">0/16</div>
           </div>
         </div>
@@ -35,29 +56,36 @@
           </div>
 
           <div class="options">
-            <div class="option" onclick="checkAnswer('baatarvan')">
+            <div class="option baatarvan" onclick="checkSelection('baatarvan')">
               <img src="images/baatraa.png" alt="Baatarvan teacher" />
               <p>Teacher Baatarvan</p>
             </div>
-            <div class="option" onclick="checkAnswer('narantsogt')">
+            <div
+              class="option narantsogt"
+              onclick="checkSelection('narantsogt')"
+            >
               <img src="images/nazo.png" alt="Narantsogt teacher" />
               <p>Teacher Narantsogt</p>
             </div>
-            <div class="option" onclick="checkAnswer('others')">
+            <div class="option others" onclick="checkSelection('others')">
               <img src="images/others.png" alt="others" />
               <p>Others</p>
             </div>
           </div>
         </div>
         <div class="controls show">
-          <button class="button" onclick="startGame()">What's next</button>
+          <button class="button" onclick="resetGame()">Let's start</button>
         </div>
         <div class="modal" id="winModal">
           <div class="modal-content">
-            <h2>Merry Christmas, ya filthy animal,</h2>
-            <p id="finalScore">Scores:</p>
+            <h2>
+              Merry Christmas, ya filthy animal, "The points didn't matter.
+              Class 3G coding needs just a little time to be logistic. You know
+              what I mean?"
+            </h2>
+            <p id="finalScore"></p>
 
-            <button class="button" onclick="startGame()">Play Again</button>
+            <button class="button" onclick="resetGame()">Play Again</button>
           </div>
         </div>
       </div>
