@@ -81,8 +81,6 @@ const showWinModal = () => {
   finalScore$.textContent = ` Baatarvan: ${baatarvanScore}, Narantsogt: ${narantsogtScore}, Avengers at 9am:${othersScore},`;
 };
 
-
-
 const quotes = [
   { quote: "За яагаад хоцрооод байнааа!", whose: "baatarvan" },
   { quote: "Хаана хурхирааад байнаа айнн?", whose: "baatarvan" },
