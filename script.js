@@ -36,7 +36,6 @@ const renderQuotes = () => {
 const checkSelection = (select) => {
   const isCorrect = select === currentQuote.whose;
   const selectedOption = document.querySelector(`.${select}`);
-  const selected = select === "baatarvan" ? baatarvan$ : narantsogt$;
 
   if (isCorrect) {
     if (select === "baatarvan") baatarvanScore++;
