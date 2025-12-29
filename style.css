@@ -25,11 +25,15 @@ body {
 }
 
 .prank-content h1 {
-  font-size: 2ew;
+  font-size: 2.4em;
+  margin-bottom: 20px;
+}
+.prank-content h2 {
+  font-size: 2em;
   margin-bottom: 20px;
 }
 .prank-content p {
-  font-size: 1.5ew;
+  font-size: 1.5em;
   margin: 0;
 }
 .loader {
