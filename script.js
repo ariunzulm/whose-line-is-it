@@ -2,11 +2,12 @@ const overlay = document.getElementById("prankOverlay");
 const quote$ = document.querySelector(".quote p");
 const score$ = document.querySelectorAll(".status-value");
 const baatarvan$ = document.querySelector(".baatarvan");
-const narantsogt$ = document.querySelector(".narantsogtc");
+const narantsogt$ = document.querySelector(".narantsogt");
 const others$ = document.querySelector(".others");
 const modalContent$ = document.querySelector(".modal-content");
 const winModal$ = document.getElementById("winModal");
 const finalScore$ = document.getElementById("finalScore");
+const button$ = document.getElementById("startButton");
 
 const endPrank = () => {
   overlay.innerHTML =
@@ -37,7 +38,7 @@ const renderQuotes = () => {
 const checkSelection = (select) => {
   const isCorrect = select === currentQuote.whose;
   const selectedOption = document.querySelector(`.${select}`);
-
+  button$.classList.add("remove");
   if (isCorrect) {
     if (select === "baatarvan") baatarvanScore++;
     if (select === "narantsogt") narantsogtScore++;
@@ -62,6 +63,7 @@ const updateScore = () => {
   if (score$[0] && score$[1]) {
     score$[0].textContent = `${baatarvanScore}/28`;
     score$[1].textContent = `${narantsogtScore}/28`;
+    score$[2].textContent = `${othersScore}/28`;
   }
 };
 
