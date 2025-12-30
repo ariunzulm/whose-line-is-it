@@ -101,6 +101,8 @@ container {
 }
 .game-board {
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   flex-wrap: wrap;
 }
@@ -114,6 +116,8 @@ container {
 }
 .quote p {
   color: #efbf04;
+  max-width: 600px;
+  height: auto;
   font-size: 2em;
   font-weight: 400px;
 }
@@ -128,6 +132,7 @@ container {
 
 .option img {
   background-color: rgb(250, 241, 241);
+  object-fit: contain;
   box-shadow: 0 13px 15 px 0 #5c9177;
   border: 3px solid #4e7060;
   border-radius: 14px;

@@ -9,7 +9,8 @@ const winModal$ = document.getElementById("winModal");
 const finalScore$ = document.getElementById("finalScore");
 
 const endPrank = () => {
-  overlay.innerHTML = "<h2>LOGIC FOUND! YOU KNOW WHAT I MEAN?</h2>";
+  overlay.innerHTML =
+    "<h2>LOGIC FOUND! YOU KNOW WHAT I MEAN? and REACT.JS is coming by the way!!</h2>";
 
   setTimeout(() => {
     overlay.style.display = "none";
@@ -59,8 +60,8 @@ const checkSelection = (select) => {
 
 const updateScore = () => {
   if (score$[0] && score$[1]) {
-    score$[0].textContent = `${baatarvanScore}/16`;
-    score$[1].textContent = `${narantsogtScore}/16`;
+    score$[0].textContent = `${baatarvanScore}/28`;
+    score$[1].textContent = `${narantsogtScore}/28`;
   }
 };
 
@@ -78,6 +79,7 @@ const resetGame = () => {
 const showWinModal = () => {
   winModal$.style.display = "flex";
   finalScore$.textContent = ` Baatarvan: ${baatarvanScore}, Narantsogt: ${narantsogtScore}, Avengers at 9am:${othersScore},`;
+  playSong();
 };
 
 const quotes = [
@@ -140,4 +142,158 @@ const quotes = [
     quote: "Багшаа одоо бодлогонуудаа хүндрүүлмээр байна өөө кккк",
     whose: "others",
   },
+  {
+    quote: "Өнөөдөртөө ингээд болноо манайхан! ОДОО ТАЙВШИРРРР",
+    whose: "baatarvan",
+  },
+  {
+    quote: "За мэдкүэээ нэг иймэрхүү юм байгааа!!",
+    whose: "baatarvan",
+  },
+  {
+    quote: "Энэ манай ангийн хүүхэд!",
+    whose: "narantsogt",
+  },
+  {
+    quote: "React гайхалтай!",
+    whose: "baatarvan",
+  },
+  {
+    quote: "Чи явж наад нүүрээ угаалдаа!",
+    whose: "baatarvan",
+  },
+  {
+    quote: "Уух нь дээ!",
+    whose: "narantsogt",
+  },
+  {
+    quote: "Надаа нэг санаа байнаа!",
+    whose: "others",
+  },
+  {
+    quote: "Чиний кодыг ч хэн үзэхэвдээ!",
+    whose: "baatarvan",
+  },
+  {
+    quote: "!",
+    whose: "narantsogt",
+  },
 ];
+console.log(quotes);
+
+let audioContext;
+
+const FREQUENCIES = {
+  C: 261.63,
+  D: 293.66,
+  E: 329.63,
+  F: 349.23,
+  G: 392.0,
+  A: 440.0,
+  B: 493.88,
+  C2: 523.25,
+  P: 0,
+};
+
+const NOTE_DURATION = 0.1;
+const AMPLITUDE = 0.5;
+
+const SONG_SEQUENCE = [
+  "E",
+  "P",
+  "E",
+  "P",
+  "E",
+  "P",
+  "P",
+  "E",
+  "P",
+  "E",
+  "P",
+  "E",
+  "P",
+  "P",
+  "E",
+  "P",
+  "G",
+  "P",
+  "C",
+  "P",
+  "D",
+  "P",
+  "E",
+  "P",
+  "P",
+  "P",
+  "F",
+  "P",
+  "F",
+  "P",
+  "F",
+  "P",
+  "F",
+  "P",
+  "F",
+  "P",
+  "E",
+  "P",
+  "E",
+  "P",
+  "E",
+  "P",
+  "E",
+  "P",
+  "E",
+  "P",
+  "D",
+  "P",
+  "D",
+  "P",
+  "E",
+  "P",
+  "D",
+  "P",
+  "G",
+];
+
+function createNoteBuffer(freq, duration, sampleRate) {
+  const numSamples = Math.floor(duration * sampleRate);
+  const channelData = new Float32Array(numSamples);
+
+  for (let i = 0; i < numSamples; i++) {
+    const time = i / sampleRate;
+    const envelope = Math.exp((-3 * time) / duration);
+    channelData[i] = AMPLITUDE * Math.sin(2 * Math.PI * freq * time) * envelope;
+  }
+  return channelData;
+}
+
+function playSong() {
+  if (!audioContext) {
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  }
+
+  const FS = audioContext.sampleRate;
+  const noteDataArrays = SONG_SEQUENCE.map((noteKey) => {
+    const freq = FREQUENCIES[noteKey];
+    return createNoteBuffer(freq, NOTE_DURATION, FS);
+  });
+
+  const totalLength = noteDataArrays.reduce(
+    (total, arr) => total + arr.length,
+    0
+  );
+  const buffer = audioContext.createBuffer(1, totalLength, FS);
+  const channelData = buffer.getChannelData(0);
+
+  let offset = 0;
+  noteDataArrays.forEach((noteArray) => {
+    channelData.set(noteArray, offset);
+    offset += noteArray.length;
+  });
+
+  const source = audioContext.createBufferSource();
+  source.buffer = buffer;
+  source.connect(audioContext.destination);
+  source.start();
+}
